@@ -34,7 +34,7 @@ project_code = task_dict.get('input').get('project_code')
 task_start = int(time.time())
 
 try:
-    r = subprocess.check_output(['download_ega_file.py','-p',project_code,'-f', ega_file_id+".aes", '-o', file_name])
+    r = subprocess.check_output(['download_from_collab.py','-p',project_code,'-f', ega_file_id+".aes", '-o', file_name])
 except Exception, e:
     with open('jt.log', 'w') as f: f.write(str(e))
     sys.exit(1)  # task failed

@@ -56,7 +56,7 @@ idx_file_md5sum = task_dict.get('input').get('idx_file_md5sum')
 task_start = int(time.time())
 
 # do the real work here
-cmd = 'upload_file_to_collab.py'
+cmd = 'upload_to_aws.py'
 
 try:
     r = subprocess.check_output("%s -i %s -g %s -id %s -md5 %s" % (cmd, file_, bundle_id, object_id, file_md5sum), shell=True)
