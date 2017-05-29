@@ -1,6 +1,6 @@
 workflow:
   name: collab-to-aws-transfer
-  version: "0.1.4"
+  version: "0.1.5"
   runtime:
     docker: null
 
@@ -63,7 +63,7 @@ workflow:
   tasks:
     download_from_collab:
       tool: download
-      input:
+      #input:
 
     upload_to_aws:
       tool: upload
