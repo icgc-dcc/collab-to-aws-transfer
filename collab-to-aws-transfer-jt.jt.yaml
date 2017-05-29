@@ -1,0 +1,128 @@
+workflow:
+  name: collab-to-aws-transfer
+
+  runtime:
+    docker: null
+
+  execution:
+    memory: 4g
+    cpu: 2
+
+  input:
+    project_code:
+      type: string
+    ega_study_id:
+      type: string
+    ega_dataset_id:
+      type: string
+    submitter_sample_id:
+      type: string
+    ega_sample_id:
+      type: string
+    icgc_sample_id:
+      type: string
+    submitter:
+      type: string
+    ega_analysis_id:
+      type: string
+    ega_experiment_id:  # null if it's analysis
+      type: string
+    ega_run_id:  # null if it's analysis
+      type: string
+    bundle_type: # experiement or analysis
+      type: string
+    bundle_id:   # either EGAR or EGAX ID
+      type: string
+    library_strategy:
+      type: string
+    ega_metadata_repo:
+      type: string
+    ega_metadata_file_name:
+      type: string
+    ega_metadata_object_id:  # this is the object_id obtained from ICGC service using bundle_id and ega_metadata_file_name as input
+      type: string
+    files:
+      type: array
+      items:
+        type: object
+        properties:
+          ega_file_id:
+            type: string
+          file_name:
+            type: string
+          file_md5sum:
+            type: string
+          object_id:  # this is the object_id obtained from ICGC service using bundle_id and file_name as input
+            type: string
+          idx_file_name:
+            type: string
+          idx_object_id:
+            type: string
+
+
+  tasks:
+    download_from_collab:
+      tool: download
+      input:
+
+    upload_to_aws:
+      tool: upload
+
+
+
+tools:
+  download:
+    command: download.py
+    input:
+      project_code:
+        type: string
+      ega_file_id:
+        type: string
+      file_name:
+        type: string
+      file_md5sum:
+        type: string
+      object_id:
+        type: string
+    output:
+    file:  # new field
+      type: string
+      is_file: true
+    ega_file_id:  # passing through
+      type: string
+    file_name:  # passing through
+      type: string
+    file_md5sum:  # passing through
+      type: string
+    object_id:  # passing through
+      type: string
+
+
+  upload:
+    command: upload.py
+    input:
+      bundle_id:
+        type: string
+      object_id:
+        type: string
+      file:
+        type: string
+        is_file: true
+      file_name:
+        type: string
+      file_size:
+        type: integer
+      file_md5sum:
+        type: string
+      # the follow params are optional
+      idx_object_id:
+        type: string
+      idx_file:
+        type: string
+        is_file: true
+      idx_file_name:
+        type: string
+      idx_file_size:
+        type: integer
+      idx_file_md5sum:
+        type: string
