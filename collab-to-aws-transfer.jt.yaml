@@ -94,7 +94,7 @@ workflow:
             task_suffix: ega_file.ega_file_id
       tasks:
         download:
-          tool: 
+          tool: download
           input:
             project_code: project_code
             ega_file_id: ega_file.ega_file_id
@@ -114,6 +114,39 @@ workflow:
             file_md5sum: xml_file_md5sum@prepare_metadata_xml
 
 tools:
+  prepare_metadata_xml:  # make a new XML cancatenate original EGA XMLs: study, sample, analysis/(experiment and run)
+    command: prepare_metadata_xml.py
+    input:
+      ega_metadata_repo:
+        type: string
+      project_code:
+        type: string
+      bundle_id:  # EGAR or EGAZ ID
+        type: string
+      ega_study_id:
+        type: string
+      ega_dataset_id:
+        type: string
+      ega_sample_id:
+        type: string
+      ega_analysis_id:
+        type: string
+      ega_expriment_id:
+        type: string
+      ega_run_id:
+        type: string
+      ega_metadata_file_name:
+        type: string
+    output:
+      xml_file:
+        type: string
+        is_file: true
+      xml_file_name:  # passing through from ega_metadata_file_name
+        type: string
+      xml_file_size:
+        type: integer
+      xml_file_md5sum:
+        type: string
   download:
     command: download.py
     input:
