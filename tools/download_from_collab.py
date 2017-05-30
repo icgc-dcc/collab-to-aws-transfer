@@ -6,7 +6,7 @@ import csv
 import hashlib
 from pkg_resources import resource_string
 
-accessToken=<access token>
+#accessToken=<access token>
 
 _COLLAB_URL = "https://meta.icgc.org"
 
