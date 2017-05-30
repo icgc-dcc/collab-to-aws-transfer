@@ -11,42 +11,42 @@ workflow:
   input:
     project_code:
       type: string
-    ega_study_id:
+    collab_study_id:
       type: string
-    ega_dataset_id:
+    collab_dataset_id:
       type: string
     submitter_sample_id:
       type: string
-    ega_sample_id:
+    collab_sample_id:
       type: string
     icgc_sample_id:
       type: string
     submitter:
       type: string
-    ega_analysis_id:
+    collab_analysis_id:
       type: string
-    ega_experiment_id:  # null if it's analysis
+    collab_experiment_id:  # null if it's analysis
       type: string
-    ega_run_id:  # null if it's analysis
+    collab_run_id:  # null if it's analysis
       type: string
     bundle_type: # experiement or analysis
       type: string
-    bundle_id:   # either EGAR or EGAX ID
+    bundle_id:   # either collabR or collabX ID
       type: string
     library_strategy:
       type: string
-    ega_metadata_repo:
+    collab_metadata_repo:
       type: string
-    ega_metadata_file_name:
+    collab_metadata_file_name:
       type: string
-    ega_metadata_object_id:  # this is the object_id obtained from ICGC service using bundle_id and ega_metadata_file_name as input
+    collab_metadata_object_id:  # this is the object_id obtained from ICGC service using bundle_id and ega_metadata_file_name as input
       type: string
     files:
       type: array
       items:
         type: object
         properties:
-          ega_file_id:
+          collab_file_id:
             type: string
           file_name:
             type: string
@@ -65,84 +65,82 @@ workflow:
     prepare_metadata_xml:
       tool: prepare_metadata_xml
       input:
-        ega_metadata_repo: ega_metadata_repo
+        collab_metadata_repo: collab_metadata_repo
         project_code: project_code
         bundle_id: bundle_id
-        ega_study_id: ega_study_id
-        ega_dataset_id: ega_dataset_id
-        ega_sample_id: ega_sample_id
-        ega_analysis_id: ega_analysis_id
-        ega_expriment_id: ega_expriment_id
-        ega_run_id: ega_run_id
-        ega_metadata_file_name: ega_metadata_file_name
+        collab_study_id: collab_study_id
+        collab_dataset_id: collab_dataset_id
+        collab_sample_id: collab_sample_id
+        collab_analysis_id: collab_analysis_id
+        collab_expriment_id: collab_expriment_id
+        collab_run_id: collab_run_id
+        collab_metadata_file_name: collab_metadata_file_name
       depends_on: null
 
     xml_file_upload:
       tool: upload
       input:
         bundle_id: bundle_id
-        object_id: ega_metadata_object_id  # this is the object_id obtained from ICGC service using bundle_id and ega_metadata_file_name as input
+        object_id: collab_metadata_object_id  # this is the object_id obtained from ICGC service using bundle_id and collab_metadata_file_name as input
         file: xml_file@prepare_metadata_xml
-        file_name: ega_metadata_file_name
+        file_name: collab_metadata_file_name
         file_size: xml_file_size@prepare_metadata_xml
         file_md5sum: xml_file_md5sum@prepare_metadata_xml
 
     parallel_download:
       scatter:
         input:
-          ega_file:
+          collab_file:
             with_items: files
-            task_suffix: ega_file.ega_file_id
+            task_suffix: collab_file.collab_file_id
       tasks:
         download:
           tool: download
           input:
             project_code: project_code
-            ega_file_id: ega_file.ega_file_id
-            file_name: ega_file.file_name
-            file_md5sum: ega_file.file_md5sum
-            object_id: ega_file.object_id
+            collab_file_id: collab_file.collab_file_id
+            file_name: collab_file.file_name
+            file_md5sum: collab_file.file_md5sum
+            object_id: collab_file.object_id
           depends_on: null
 
         upload_to_aws:
           tool: upload
           input:
-            bundle_id: bundle_id
-            object_id: ega_metadata_object_id  # this is the object_id obtained from ICGC service using bundle_id and ega_metadata_file_name as input
-            file: xml_file@prepare_metadata_xml
-            file_name: ega_metadata_file_name
-            file_size: xml_file_size@prepare_metadata_xml
-            file_md5sum: xml_file_md5sum@prepare_metadata_xml
-
+            project_code: project_code
+            collab_file_id: collab_file.collab_file_id
+            file_name: collab_file.file_name
+            file_md5sum: collab_file.file_md5sum
+            object_id: collab_file.object_id
 tools:
-  prepare_metadata_xml:  # make a new XML cancatenate original EGA XMLs: study, sample, analysis/(experiment and run)
+  prepare_metadata_xml:  # make a new XML cancatenate original collab XMLs: study, sample, analysis/(experiment and run)
     command: prepare_metadata_xml.py
     input:
-      ega_metadata_repo:
+      collab_metadata_repo:
         type: string
       project_code:
         type: string
       bundle_id:  # EGAR or EGAZ ID
         type: string
-      ega_study_id:
+      collab_study_id:
         type: string
-      ega_dataset_id:
+      collab_dataset_id:
         type: string
-      ega_sample_id:
+      collab_sample_id:
         type: string
-      ega_analysis_id:
+      collab_analysis_id:
         type: string
-      ega_expriment_id:
+      collab_expriment_id:
         type: string
-      ega_run_id:
+      collab_run_id:
         type: string
-      ega_metadata_file_name:
+      collab_metadata_file_name:
         type: string
     output:
       xml_file:
         type: string
         is_file: true
-      xml_file_name:  # passing through from ega_metadata_file_name
+      xml_file_name:  # passing through from collab_metadata_file_name
         type: string
       xml_file_size:
         type: integer
@@ -153,7 +151,7 @@ tools:
     input:
       project_code:
         type: string
-      ega_file_id:
+      collab_file_id:
         type: string
       file_name:
         type: string
@@ -165,7 +163,7 @@ tools:
     file:  # new field
       type: string
       is_file: true
-    ega_file_id:  # passing through
+    collab_file_id:  # passing through
       type: string
     file_name:  # passing through
       type: string
