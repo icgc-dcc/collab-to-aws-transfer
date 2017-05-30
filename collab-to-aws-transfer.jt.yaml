@@ -61,58 +61,58 @@ workflow:
 
 
   tasks:
-    #
-    # prepare_metadata_xml:
-    #   tool: prepare_metadata_xml
-    #   input:
-    #     ega_metadata_repo: ega_metadata_repo
-    #     project_code: project_code
-    #     bundle_id: bundle_id
-    #     ega_study_id: ega_study_id
-    #     ega_dataset_id: ega_dataset_id
-    #     ega_sample_id: ega_sample_id
-    #     ega_analysis_id: ega_analysis_id
-    #     ega_expriment_id: ega_expriment_id
-    #     ega_run_id: ega_run_id
-    #     ega_metadata_file_name: ega_metadata_file_name
-    #   depends_on: null
-    #
-    # xml_file_upload:
-    #   tool: upload
-    #   input:
-    #     bundle_id: bundle_id
-    #     object_id: ega_metadata_object_id  # this is the object_id obtained from ICGC service using bundle_id and ega_metadata_file_name as input
-    #     file: xml_file@prepare_metadata_xml
-    #     file_name: ega_metadata_file_name
-    #     file_size: xml_file_size@prepare_metadata_xml
-    #     file_md5sum: xml_file_md5sum@prepare_metadata_xml
-    #
-    # parallel_download:
-    #   scatter:
-    #     input:
-    #       ega_file:
-    #         with_items: files
-    #         task_suffix: ega_file.ega_file_id
-    #   tasks:
-    #     download:
-    #       tool: download
-    #       input:
-    #         project_code: project_code
-    #         ega_file_id: ega_file.ega_file_id
-    #         file_name: ega_file.file_name
-    #         file_md5sum: ega_file.file_md5sum
-    #         object_id: ega_file.object_id
-    #       depends_on: null
-    #
-    #     upload_to_aws:
-    #       tool: upload
-    #       input:
-    #         bundle_id: bundle_id
-    #         object_id: ega_metadata_object_id  # this is the object_id obtained from ICGC service using bundle_id and ega_metadata_file_name as input
-    #         file: xml_file@prepare_metadata_xml
-    #         file_name: ega_metadata_file_name
-    #         file_size: xml_file_size@prepare_metadata_xml
-    #         file_md5sum: xml_file_md5sum@prepare_metadata_xml
+
+    prepare_metadata_xml:
+      tool: prepare_metadata_xml
+      input:
+        ega_metadata_repo: ega_metadata_repo
+        project_code: project_code
+        bundle_id: bundle_id
+        ega_study_id: ega_study_id
+        ega_dataset_id: ega_dataset_id
+        ega_sample_id: ega_sample_id
+        ega_analysis_id: ega_analysis_id
+        ega_expriment_id: ega_expriment_id
+        ega_run_id: ega_run_id
+        ega_metadata_file_name: ega_metadata_file_name
+      depends_on: null
+
+    xml_file_upload:
+      tool: upload
+      input:
+        bundle_id: bundle_id
+        object_id: ega_metadata_object_id  # this is the object_id obtained from ICGC service using bundle_id and ega_metadata_file_name as input
+        file: xml_file@prepare_metadata_xml
+        file_name: ega_metadata_file_name
+        file_size: xml_file_size@prepare_metadata_xml
+        file_md5sum: xml_file_md5sum@prepare_metadata_xml
+
+    parallel_download:
+      scatter:
+        input:
+          ega_file:
+            with_items: files
+            task_suffix: ega_file.ega_file_id
+      tasks:
+        download:
+          tool: download
+          input:
+            project_code: project_code
+            ega_file_id: ega_file.ega_file_id
+            file_name: ega_file.file_name
+            file_md5sum: ega_file.file_md5sum
+            object_id: ega_file.object_id
+          depends_on: null
+
+        upload_to_aws:
+          tool: upload
+          input:
+            bundle_id: bundle_id
+            object_id: ega_metadata_object_id  # this is the object_id obtained from ICGC service using bundle_id and ega_metadata_file_name as input
+            file: xml_file@prepare_metadata_xml
+            file_name: ega_metadata_file_name
+            file_size: xml_file_size@prepare_metadata_xml
+            file_md5sum: xml_file_md5sum@prepare_metadata_xml
 
 tools:
   prepare_metadata_xml:  # make a new XML cancatenate original EGA XMLs: study, sample, analysis/(experiment and run)

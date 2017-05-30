@@ -6,6 +6,7 @@ import csv
 import hashlib
 from pkg_resources import resource_string
 from shutil import copyfile
+import argparse
 
 #accessToken=<access token>
 
@@ -14,51 +15,53 @@ _COLLAB_URL = "https://meta.icgc.org"
 
 
 #import pysam
+def main():
+    parser = argparse.ArgumentParser(description='Download files from collab')
+	parser.add_argument('-p', '--project_name', dest="project_name", help="Name of the ICGC project", required=True)
+	parser.add_argument('-f', '--file_name', dest="file_name", help="EGA file name", required=True)
+	parser.add_argument('-o', '--output', dest='output', help="Output file name", required=True)
 
-def get_file_md5(fname):
-	if not os.path.isfile(fname):
-		raise ValueError("The file does not exist: "+fname)
-	hash_md5 = hashlib.md5()
-	with open(fname, "rb") as f:
-		for chunk in iter(lambda: f.read(4096), b""):
-			hash_md5.update(chunk)
-	return hash_md5.hexdigest()
+    results = parser.parse_args()
 
-def get_file_size(fname):
-	if not os.path.isfile(fname):
-		raise ValueError("The file does not exist: "+fname)
-	return os.path.getsize(fname)
+    file_list = randomword(60)+".txt"
 
-def delete_file(filename):
-	""" Delete a file in the local system
-		Args:
-			filename (str):	Path of the file name
-		Raises:
-			ValueError:	The file does not exist
-	"""
-	if not os.path.isfile(filename):
-		raise ValueError("The file does not exist: "+ filename)
-	os.remove(filename)
+    try:
+        try:
+            os.environ['ASCP_EGA_HOST']
+    # Check if ASCP_EGA_USER environment variable exists: ega username
+			os.environ['ASCP_EGA_USER']
 
-def generate_bai_from_bam(bam_file_path, file_output):
-	""" Generate a bai file from a bam file
-		Args:
-			bam_file_path (str):	Path of the bam file
-			file_output (str):		Path to create the bai file
-		Raises:
-			ValueError:	Bam file does not exist
-			ValueError: Output file already exists
-			ValueError: Input same as output file
-	"""
-	if not os.path.isfile(bam_file_path):
-		raise ValueError("Bam file does not exist: "+bam_file_path)
+			# Check if ASPERA_SCP_PASS environment variable exists: ascpera password
+			os.environ['ASPERA_SCP_PASS']
+		except KeyError:
+			raise KeyError("Global Variable: ASCP_EGA_HOST, ASCP_EGA_USER and ASPERA_SCP_PASS must exist in the environment.")
 
-	if os.path.isfile(file_output):
-		raise ValueError("The output file already exists: "+file_output)
+		# Raise an error if the output file exists
+		if os.path.isfile(results.output):
+			raise ValueError("Output file already exists")
 
-	if bam_file_path == file_output:
-		raise ValueError("The input file cannot be the same as the output file: "+bam_file_path)
+		# Write the file to be downloaded to the temporary file
+		with open(file_list, 'w') as f:
+			f.write(os.path.join('data',results.project_name,results.file_name))
+			f.write('\n')
 
-	pysam.index(bam_file_path)
-	if not bam_file_path+".bai" == file_output:
-		copyfile(bam_file_path+".bai",file_output)
+		# Download process
+		subprocess.call(['ascp','-k','1','-QTl','100m','--file-list='+file_list,'--partial-file-suffix=PART','--ignore-host-key','--mode=recv','--host='+os.environ['ASCP_EGA_HOST'],'--user='+os.environ['ASCP_EGA_USER'],'.'])
+
+		os.rename(results.file_name, results.output)
+
+		# Deletion of temporary elements
+		os.remove(file_list)
+	except Exception, err:
+		print str(err)
+		if os.path.isfile(file_list):
+			os.remove(file_list)
+		exit(1)
+
+
+
+def randomword(length):
+   return ''.join(random.choice(string.lowercase) for i in range(length))
+
+ if __name__ == "__main__":
+    main()
