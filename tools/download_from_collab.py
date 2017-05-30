@@ -5,43 +5,14 @@ import os
 import csv
 import hashlib
 from pkg_resources import resource_string
+from shutil import copyfile
 
 #accessToken=<access token>
 
 _COLLAB_URL = "https://meta.icgc.org"
-
-def login(email, password):
-	""" Login to collab
-		Args:
-			email (str): 		Email of the user to login
-			password (str): 	Password of the user
-		Returns:
-			str: The return value. A session token
-		Raises:
-			ValueError: If `email` format is not a valid email
-			ValueError: If credentials ar invalid
-	"""
-
-	# Email must be a valid email
-	if not re.match("[^@]+@[^@]+\.[^@]+", email):
-		raise ValueError(email+" is not a valid email")
-
-	try:
-		return _result_from_response(requests.get(_api_access_endpoint("/users/"+email+"?pass="+password, None), verify=False))[1]
-	except ValueError, err:
-		raise ValueError("EGA response: "+str(err)+" - Verify email and password")
-
-
-
-
-
-
-
 #icgconnect/utils
 
-import hashlib
-import os
-from shutil import copyfile
+
 #import pysam
 
 def get_file_md5(fname):
