@@ -2,11 +2,9 @@
 
 import os
 import sys
-import json
 import time
-from random import randint
 import subprocess
-import download_from_collab
+
 from utils import get_task_dict, save_output_json
 
 task_dict = get_task_dict(sys.argv[1])
