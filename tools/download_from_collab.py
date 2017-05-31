@@ -152,7 +152,9 @@ def download(icgc_storage_client, force):
     try:
         if force == True:
             subprocess.check_output([icgc_storage_client,'--profile','collab','download','--object_id', object_id,'--force'])
+            print('force')
         else:
+            print('notforce')
             subprocess.check_output([icgc_storage_client,'--profile','collab','download','--object_id', object_id])
     except subprocess.CalledProcessError as err:
         raise Exception("download to collab failed: "+str(err))

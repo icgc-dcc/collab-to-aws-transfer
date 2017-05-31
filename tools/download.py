@@ -40,7 +40,7 @@ try:
 except Exception, e:
     with open('jt.log', 'w') as f: f.write(str(e))
 
-    #raise Exception  #for testing
+    raise Exception  #for testing
     sys.exit(1)  # task failed
 
 # try:
