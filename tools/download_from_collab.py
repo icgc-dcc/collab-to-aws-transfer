@@ -4,7 +4,7 @@ import subprocess
 import os
 import csv
 import hashlib
-from icgconnect.utils import file_utils
+from utils import file_utils
 from pkg_resources import resource_string
 
 _COLLAB_URL = "https://meta.icgc.org"
