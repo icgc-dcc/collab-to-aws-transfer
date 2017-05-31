@@ -8,7 +8,7 @@ from utils import file_utils
 from pkg_resources import resource_string
 
 _COLLAB_URL = "https://meta.icgc.org"
-
+'''
 def entities_get(gnos_id):
     """ The information about an entity
         Args:
@@ -142,7 +142,7 @@ def filename_get_post(gnos_id, id_service_token, filename, project_code):
     if not filename_exists(gnos_id, filename):
         filename_post(gnos_id, id_service_token, filename, project_code)
     return filename_get(gnos_id, filename)
-
+'''
 def download(manifest_file, icgc_storage_client, force):
     """ download files listed in a manifest file to Collaboratory
         Args:
@@ -156,7 +156,7 @@ def download(manifest_file, icgc_storage_client, force):
             subprocess.check_output([icgc_storage_client,'--profile','collab','download','--manifest',manifest_file])
     except subprocess.CalledProcessError as err:
         raise Exception("download to collab failed: "+str(err))
-
+'''
 def _validate_manifest_file(manifest_file):
     """ Validates if the manifest file for collaboratory download has the required format
         Args:
@@ -308,3 +308,4 @@ def quick_download(gnos_id, files, icgc_storage_client, force=True):
     validate_manifest_file(gnos_id, manifest_file)
     download(manifest_file, icgc_storage_client, force)
     delete_manifest_file(manifest_file, True)
+'''

@@ -10,7 +10,7 @@ import download_from_collab
 from utils import get_task_dict, save_output_json
 
 #task_dict = get_task_dict(sys.argv[1])
-task_dict = get_task_dict("""{"input": {"project_code": "23423","collab_file_id": "2341","file_name": "gsdg","file_md5sum": "sdfs","object_id": "23423"}}""")
+task_dict = get_task_dict("""{"input": {"project_code": "23423","collab_file_id": "2341","file_name": "gsdg","file_md5sum": "sdfs","object_id": "fbd35588-5bf8-560c-873a-0410f49e5748"}}""")
 cwd = os.getcwd()
 
 """
