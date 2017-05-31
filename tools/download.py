@@ -36,7 +36,7 @@ project_code = task_dict.get('input').get('project_code')
 task_start = int(time.time())
 
 try:
-    print subprocess.check_output(['icgc_storage_client','--profile',' collab','download','--object_id', object_id,'--output-dir data' ])
+    print subprocess.check_output(['icgc-storage-client','--profile',' collab','download','--object_id', object_id,'--output-dir data' ])
 
 except Exception, e:
     with open('jt.log', 'w') as f: f.write(str(e))
