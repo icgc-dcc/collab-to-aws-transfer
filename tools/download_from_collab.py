@@ -151,7 +151,7 @@ def download(icgc_storage_client, force):
     #_validate_manifest_file(manifest_file)
     try:
         if force == True:
-            subprocess.check_output([icgc_storage_client,'--profile','collab','download','--object_id', object_id'--force'])
+            subprocess.check_output([icgc_storage_client,'--profile','collab','download','--object_id', object_id,'--force'])
         else:
             subprocess.check_output([icgc_storage_client,'--profile','collab','download','--object_id', object_id])
     except subprocess.CalledProcessError as err:
