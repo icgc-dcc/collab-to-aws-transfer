@@ -143,7 +143,7 @@ def filename_get_post(gnos_id, id_service_token, filename, project_code):
         filename_post(gnos_id, id_service_token, filename, project_code)
     return filename_get(gnos_id, filename)
 '''
-def download(manifest_file, icgc_storage_client, force):
+def download(icgc_storage_client, force):
     """ download files listed in a manifest file to Collaboratory
         Args:
             manifest_file (str):    The local path of a manifest file
@@ -151,9 +151,9 @@ def download(manifest_file, icgc_storage_client, force):
     #_validate_manifest_file(manifest_file)
     try:
         if force == True:
-            subprocess.check_output([icgc_storage_client,'--profile','collab','download','--manifest',manifest_file,'--force'])
+            subprocess.check_output([icgc_storage_client,'--profile','collab','download','--object_id', object_id'--force'])
         else:
-            subprocess.check_output([icgc_storage_client,'--profile','collab','download','--manifest',manifest_file])
+            subprocess.check_output([icgc_storage_client,'--profile','collab','download','--object_id', object_id])
     except subprocess.CalledProcessError as err:
         raise Exception("download to collab failed: "+str(err))
 '''
