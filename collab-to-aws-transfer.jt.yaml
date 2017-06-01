@@ -61,31 +61,31 @@ workflow:
 
 
   tasks:
-
-    prepare_metadata_xml:
-      tool: prepare_metadata_xml
-      input:
-        collab_metadata_repo: collab_metadata_repo
-        project_code: project_code
-        bundle_id: bundle_id
-        collab_study_id: collab_study_id
-        collab_dataset_id: collab_dataset_id
-        collab_sample_id: collab_sample_id
-        collab_analysis_id: collab_analysis_id
-        collab_expriment_id: collab_expriment_id
-        collab_run_id: collab_run_id
-        collab_metadata_file_name: collab_metadata_file_name
-      depends_on: null
-
-    xml_file_upload:
-      tool: upload
-      input:
-        bundle_id: bundle_id
-        object_id: collab_metadata_object_id  # this is the object_id obtained from ICGC service using bundle_id and collab_metadata_file_name as input
-        file: xml_file@prepare_metadata_xml
-        file_name: collab_metadata_file_name
-        file_size: xml_file_size@prepare_metadata_xml
-        file_md5sum: xml_file_md5sum@prepare_metadata_xml
+    #
+    # prepare_metadata_xml:
+    #   tool: prepare_metadata_xml
+    #   input:
+    #     collab_metadata_repo: collab_metadata_repo
+    #     project_code: project_code
+    #     bundle_id: bundle_id
+    #     collab_study_id: collab_study_id
+    #     collab_dataset_id: collab_dataset_id
+    #     collab_sample_id: collab_sample_id
+    #     collab_analysis_id: collab_analysis_id
+    #     collab_expriment_id: collab_expriment_id
+    #     collab_run_id: collab_run_id
+    #     collab_metadata_file_name: collab_metadata_file_name
+    #   depends_on: null
+    #
+    # xml_file_upload:
+    #   tool: upload
+    #   input:
+    #     bundle_id: bundle_id
+    #     object_id: collab_metadata_object_id  # this is the object_id obtained from ICGC service using bundle_id and collab_metadata_file_name as input
+    #     file: xml_file@prepare_metadata_xml
+    #     file_name: collab_metadata_file_name
+    #     file_size: xml_file_size@prepare_metadata_xml
+    #     file_md5sum: xml_file_md5sum@prepare_metadata_xml
 
     parallel_download:
       scatter:
