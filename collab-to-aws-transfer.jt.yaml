@@ -160,17 +160,17 @@ tools:
       object_id:
         type: string
     output:
-    file:  # new field
-      type: string
-      is_file: true
-    collab_file_id:  # passing through
-      type: string
-    file_name:  # passing through
-      type: string
-    file_md5sum:  # passing through
-      type: string
-    object_id:  # passing through
-      type: string
+      file:  # new field
+        type: string
+        is_file: true
+      collab_file_id:  # passing through
+        type: string
+      file_name:  # passing through
+        type: string
+      file_md5sum:  # passing through
+        type: string
+      object_id:  # passing through
+        type: string
 
 
   upload:
