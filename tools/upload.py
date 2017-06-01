@@ -1,105 +1,81 @@
-# '''#!/usr/bin/env python
-#
-# import os
-# import sys
-# import json
-# import time
-# from random import randint
-# from utils import get_task_dict, save_output_json
-# #from icgconnect.collab import
-# import subprocess
-#
-# task_dict = get_task_dict(sys.argv[1])
-# cwd = os.getcwd()
-#
-# """
-#     input:
-#       bundle_id:
-#         type: string
-#       object_id:
-#         type: string
-#       file:
-#         type: string
-#         is_file: true
-#       file_name:
-#         type: string
-#       file_size:
-#         type: integer
-#       file_md5sum:
-#         type: string
-#       # the follow params are optional
-#       idx_object_id:
-#         type: string
-#       idx_file:
-#         type: string
-#         is_file: true
-#       idx_file_name:
-#         type: string
-#       idx_file_size:
-#         type: integer
-#       idx_file_md5sum:
-#         type: string
-# """
-# bundle_id = task_dict.get('input').get('bundle_id')
-# object_id = task_dict.get('input').get('object_id')
-# file_ = task_dict.get('input').get('file')
-# file_name = task_dict.get('input').get('file_name')
-# file_size = task_dict.get('input').get('file_size')
-# file_md5sum = task_dict.get('input').get('file_md5sum')
-#
-# idx_object_id = task_dict.get('input').get('idx_object_id')
-# idx_file = task_dict.get('input').get('idx_file')
-# idx_file_name = task_dict.get('input').get('idx_file_name')
-# idx_file_size = task_dict.get('input').get('idx_file_size')
-# idx_file_md5sum = task_dict.get('input').get('idx_file_md5sum')
-#
-#
-# task_start = int(time.time())
-#
-# # do the real work here
-# cmd = 'upload_to_aws.py'
-#
+import os
+import sys
+import time
+import subprocess
+
+from utils import get_task_dict, save_output_json
+
+#task_dict = get_task_dict(sys.argv[1])
+task_dict = get_task_dict("""{"input": {"project_code": "23423","collab_file_id": "2341","file_name": "data/test","file_md5sum": "sdfs","object_id": "fbd35588-5bf8-560c-873a-0410f49e5748"}}""")
+cwd = os.getcwd()
+
+"""
+    input:
+      project_code:
+        type: string
+      collab_file_id:
+        type: string
+      file_name:
+        type: string
+      file_md5sum:
+        type: string
+      object_id:
+        type: string
+"""
+collab_file_id = task_dict.get('input').get('collab_file_id')
+file_name = task_dict.get('input').get('file_name')
+file_md5sum = task_dict.get('input').get('file_md5sum')
+object_id = task_dict.get('input').get('object_id')
+project_code = task_dict.get('input').get('project_code')
+
+
+task_start = int(time.time())
+
+try:
+    print subprocess.check_output(['icgc-storage-client','upload','--file', file_name, '--object-id', 'fbd35588-5bf8-560c-873a-0410f49e5748' ])
+
+except Exception, e:
+    with open('jt.log', 'w') as f: f.write(str(e))
+
+    raise Exception  #for testing
+    sys.exit(1)  # task failed
+
 # try:
-#     r = subprocess.check_output("%s -i %s -g %s -id %s -md5 %s" % (cmd, file_, bundle_id, object_id, file_md5sum), shell=True)
+#     r = subprocess.check_output(['curl','https://raw.githubusercontent.com/jt-hub/ega-collab-transfer-tools/master/download_ega_file.py','|','python','-','-p',project_code,'-f', ega_file_id+".aes", '-o', file_name])
 # except Exception, e:
-#     with open('jt.log', 'w') as f: f.write(str(e))
+#     print e
 #     sys.exit(1)  # task failed
-#
-# # index exist
-# if idx_object_id:
-#     try:
-#         r = subprocess.check_output("%s -i %s -g %s -id %s -md5 %s" % (cmd, idx_file, bundle_id, idx_object_id, idx_file_md5sum), shell=True)
-#     except Exception, e:
-#         with open('jt.log', 'w') as f: f.write(str(e))
-#         sys.exit(1)  # task failed
-#
-#
-# # try:
-# #     r = subprocess.check_output(['curl', 'https://raw.githubusercontent.com/jt-hub/ega-collab-transfer-tools/master/upload_file_to_collab.py', '|', 'python', '-', '-i', file_, '-g', bundle_id, '-id', object_id, '-md5', file_md5sum])
-# # except Exception, e:
-# #     print e
-# #     sys.exit(1)  # task failed
-#
-# # # index exist
-# # if idx_object_id:
-# #     try:
-# #         r = subprocess.check_output(['curl', 'https://raw.githubusercontent.com/jt-hub/ega-collab-transfer-tools/master/upload_file_to_collab.py', '|', 'python', '-', '-i', file_, '-g', bundle_id, '-id', object_id, '-md5', file_md5sum])
-# #     except Exception, e:
-# #         print e
-# #         sys.exit(1)  # task failed
-#
-#
-#
-# # complete the task
-#
-# task_stop = int(time.time())
-#
-# output_json = {
-#     'runtime': {
-#         'task_start': task_start,
-#         'task_stop': task_stop
-#     }
-# }
-#
-# save_output_json(output_json)
-# '''
+
+
+# complete the task
+
+task_stop = int(time.time())
+
+"""
+    output:
+      file:  # new field
+        type: string
+        is_file: true
+      collab_file_id:  # passing through
+        type: string
+      file_name:  # passing through
+        type: string
+      file_md5sum:  # passing through
+        type: string
+      object_id:  # passing through
+        type: string
+"""
+
+output_json = {
+    'file': os.path.join(cwd, file_name),
+    'collab_file_id': collab_file_id,
+    'file_name': file_name,  # we may need to deal with encrypted / unencypted file names
+    'object_id': object_id,
+    'file_md5sum': file_md5sum,
+    'runtime': {
+        'task_start': task_start,
+        'task_stop': task_stop
+    }
+}
+
+save_output_json(output_json)
