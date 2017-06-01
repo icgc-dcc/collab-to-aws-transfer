@@ -108,6 +108,7 @@ workflow:
           input:
             project_code: project_code
             file_name: file_name@download
+            file: file@download
             file_md5sum: file_md5sum@download
             object_id: object_id@download
 tools:
