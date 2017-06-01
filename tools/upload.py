@@ -5,8 +5,8 @@ import subprocess
 
 from utils import get_task_dict, save_output_json
 
-#task_dict = get_task_dict(sys.argv[1])
-task_dict = get_task_dict("""{"input": {"project_code": "23423","collab_file_id": "2341","file_name": "data/test","file_md5sum": "sdfs","object_id": "fbd35588-5bf8-560c-873a-0410f49e5748"}}""")
+task_dict = get_task_dict(sys.argv[1])
+#task_dict = get_task_dict("""{"input": {"project_code": "23423","collab_file_id": "2341","file_name": "data/test","file_md5sum": "sdfs","object_id": "fbd35588-5bf8-560c-873a-0410f49e5748"}}""")
 cwd = os.getcwd()
 
 """
@@ -32,8 +32,8 @@ project_code = task_dict.get('input').get('project_code')
 task_start = int(time.time())
 
 try:
-    print subprocess.check_output(['icgc-storage-client','upload','--file', file_name, '--object-id', 'fbd35588-5bf8-560c-873a-0410f49e5748', '--md5', '039d75310a642d7ee2d2d8dfd7107c31', '--force'])
-
+    print subprocess.check_output(['icgc-storage-client','upload','--file', file_name, '--object-id', object_id, '--md5', file_md5sum, '--force'])
+    #auto icgc-storage-client upload --file test --object-id fbd35588-5bf8-560c-873a-0410f49e5748 --md5 d8e8fca2dc0f896fd7cb4cb0031ba249 --force
 except Exception, e:
     with open('jt.log', 'w') as f: f.write(str(e))
 

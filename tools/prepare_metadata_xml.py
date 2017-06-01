@@ -11,55 +11,55 @@ cwd = os.getcwd()
 
 """
     input:
-      ega_metadata_git_repo:
+      collab_metadata_git_repo:
         type: string
-      ega_metadata_path:
+      collab_metadata_path:
         type: string
       project_code:
         type: string
-      bundle_id:  # EGAR or EGAZ ID
+      bundle_id:  # collabR or collabZ ID
         type: string
-      ega_dataset_id:
+      collab_dataset_id:
         type: string
-      ega_sample_id:
+      collab_sample_id:
         type: string
-      ega_metadata_file_name:
+      collab_metadata_file_name:
         type: string
 """
 project_code = task_dict.get('input').get('project_code')
 bundle_id = task_dict.get('input').get('bundle_id')
-ega_dataset_id = task_dict.get('input').get('ega_dataset_id')
-ega_sample_id = task_dict.get('input').get('ega_sample_id')
-ega_study_id = task_dict.get('input').get('ega_study_id')
-ega_metadata_file_name = task_dict.get('input').get('ega_metadata_file_name')
-ega_expriment_id = task_dict.get('input').get('ega_expriment_id')
-ega_analysis_id = task_dict.get('input').get('ega_analysis_id')
-ega_run_id = task_dict.get('input').get('ega_run_id', '')
-output_file = task_dict.get('input').get('ega_metadata_file_name')
-ega_metadata_repo = task_dict.get('input').get('ega_metadata_repo')
+collab_dataset_id = task_dict.get('input').get('collab_dataset_id')
+collab_sample_id = task_dict.get('input').get('collab_sample_id')
+collab_study_id = task_dict.get('input').get('collab_study_id')
+collab_metadata_file_name = task_dict.get('input').get('collab_metadata_file_name')
+collab_expriment_id = task_dict.get('input').get('collab_expriment_id')
+collab_analysis_id = task_dict.get('input').get('collab_analysis_id')
+collab_run_id = task_dict.get('input').get('collab_run_id', '')
+output_file = task_dict.get('input').get('collab_metadata_file_name')
+collab_metadata_repo = task_dict.get('input').get('collab_metadata_repo')
 
 # do the real work here
 task_start = int(time.time())
 
 try:
-    subprocess.check_output(['prepare_ega_xml_audit.py',
-      '-i',ega_metadata_repo,
+    subprocess.check_output(['prepare_collab_xml_audit.py',
+      '-i',collab_metadata_repo,
       '-p',project_code,
       '-o',output_file,
-      '-d',ega_dataset_id,
-      '-a',ega_analysis_id if ega_analysis_id else '',
-      '-e',ega_expriment_id if ega_expriment_id else '',
-      '-r',ega_run_id if ega_run_id else '',
-      '-sa',ega_sample_id if ega_sample_id else '',
-      '-st',ega_study_id if ega_study_id else ''])
-    # subprocess.check_output(['curl','https://raw.githubusercontent.com/jt-hub/ega-collab-transfer-tools/master/prepare_ega_xml_audit.py','|','python','-',
-    #   '-i',ega_metadata_repo,
+      '-d',collab_dataset_id,
+      '-a',collab_analysis_id if collab_analysis_id else '',
+      '-e',collab_expriment_id if collab_expriment_id else '',
+      '-r',collab_run_id if collab_run_id else '',
+      '-sa',collab_sample_id if collab_sample_id else '',
+      '-st',collab_study_id if collab_study_id else ''])
+    # subprocess.check_output(['curl','https://raw.githubusercontent.com/jt-hub/collab-collab-transfer-tools/master/prepare_collab_xml_audit.py','|','python','-',
+    #   '-i',collab_metadata_repo,
     #   '-p',project_code,
     #   '-o',output_file,
-    #   '-d',ega_dataset_id,
-    #   '-e',ega_expriment_id if ega_expriment_id else '',
-    #   '-r',ega_run_id if ega_run_id else '',
-    #   '-sa',ega_sample_id if ega_sample_id else ''])
+    #   '-d',collab_dataset_id,
+    #   '-e',collab_expriment_id if collab_expriment_id else '',
+    #   '-r',collab_run_id if collab_run_id else '',
+    #   '-sa',collab_sample_id if collab_sample_id else ''])
 except Exception, e:
     with open('jt.log', 'w') as f: f.write(str(e))
     sys.exit(1)  # task failed
@@ -73,7 +73,7 @@ task_stop = int(time.time())
       xml_file:
         type: string
         is_file: true
-      xml_file_name:  # passing through from ega_metadata_file_name
+      xml_file_name:  # passing through from collab_metadata_file_name
         type: string
       xml_file_size:
         type: integer

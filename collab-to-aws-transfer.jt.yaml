@@ -61,7 +61,7 @@ workflow:
 
 
   tasks:
-    #
+
     # prepare_metadata_xml:
     #   tool: prepare_metadata_xml
     #   input:
@@ -98,7 +98,6 @@ workflow:
           tool: download
           input:
             project_code: project_code
-            collab_file_id: collab_file.collab_file_id
             file_name: collab_file.file_name
             file_md5sum: collab_file.file_md5sum
             object_id: collab_file.object_id
@@ -108,10 +107,9 @@ workflow:
           tool: upload
           input:
             project_code: project_code
-            collab_file_id: collab_file.collab_file_id
-            file_name: collab_file.file_name
-            file_md5sum: collab_file.file_md5sum
-            object_id: collab_file.object_id
+            file_name: file_name@download
+            file_md5sum: file_md5sum@download
+            object_id: object_id@download
 tools:
   prepare_metadata_xml:  # make a new XML cancatenate original collab XMLs: study, sample, analysis/(experiment and run)
     command: prepare_metadata_xml.py
@@ -151,8 +149,6 @@ tools:
     input:
       project_code:
         type: string
-      collab_file_id:
-        type: string
       file_name:
         type: string
       file_md5sum:
@@ -163,8 +159,6 @@ tools:
       file:  # new field
         type: string
         is_file: true
-      collab_file_id:  # passing through
-        type: string
       file_name:  # passing through
         type: string
       file_md5sum:  # passing through
