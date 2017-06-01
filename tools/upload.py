@@ -32,7 +32,7 @@ project_code = task_dict.get('input').get('project_code')
 task_start = int(time.time())
 
 try:
-    print subprocess.check_output(['icgc-storage-client','upload','--file', file_name, '--object-id', 'fbd35588-5bf8-560c-873a-0410f49e5748', '--md5', '039d75310a642d7ee2d2d8dfd7107c31'])
+    print subprocess.check_output(['icgc-storage-client','upload','--file', file_name, '--object-id', 'fbd35588-5bf8-560c-873a-0410f49e5748', '--md5', '039d75310a642d7ee2d2d8dfd7107c31', '--force'])
 
 except Exception, e:
     with open('jt.log', 'w') as f: f.write(str(e))
