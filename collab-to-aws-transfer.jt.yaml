@@ -1,10 +1,11 @@
 workflow:
   name: collab-to-aws-transfer
-  version: "0.1.18"
+  version: "0.1.19"
   runtime:
     docker: null
 
   execution:
+    constraint: same_host
     memory: 4g
     cpu: 2
 
