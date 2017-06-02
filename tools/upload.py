@@ -24,7 +24,7 @@ file_ = task_dict.get('input').get('file')
 file_name = task_dict.get('input').get('file_name')
 file_md5sum = task_dict.get('input').get('file_md5sum')
 object_id = task_dict.get('input').get('object_id')
-project_code = task_dict.get('input').get('project_code')
+#project_code = task_dict.get('input').get('project_code')
 
 
 task_start = int(time.time())
