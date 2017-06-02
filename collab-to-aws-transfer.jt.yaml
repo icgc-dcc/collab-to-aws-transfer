@@ -1,6 +1,6 @@
 workflow:
   name: collab-to-aws-transfer
-  version: "0.1.16"
+  version: "0.1.17"
   runtime:
     docker: null
 
@@ -61,7 +61,6 @@ workflow:
 
 
   tasks:
-
     # prepare_metadata_xml:
     #   tool: prepare_metadata_xml
     #   input:
@@ -87,30 +86,30 @@ workflow:
     #     file_size: xml_file_size@prepare_metadata_xml
     #     file_md5sum: xml_file_md5sum@prepare_metadata_xml
 
-    parallel_download:
-      scatter:
+    #parallel_download:
+    #  scatter:
+    #    input:
+    #      collab_file:
+    #        with_items: files
+    #        task_suffix: collab_file.collab_file_id
+    #tasks:
+      download:
+        tool: download
         input:
-          collab_file:
-            with_items: files
-            task_suffix: collab_file.collab_file_id
-      tasks:
-        download:
-          tool: download
-          input:
-            project_code: project_code
-            file_name: collab_file.file_name
-            file_md5sum: collab_file.file_md5sum
-            object_id: collab_file.object_id
-          depends_on: null
+          project_code: project_code
+          file_name: collab_file.file_name
+          file_md5sum: collab_file.file_md5sum
+          object_id: collab_file.object_id
+        depends_on: null
 
-        upload:
-          tool: upload
-          input:
-            project_code: project_code
-            file_name: file_name@download
-            file: file@download
-            file_md5sum: file_md5sum@download
-            object_id: object_id@download
+      upload:
+        tool: upload
+        input:
+          project_code: project_code
+          file_name: file_name@download
+          file: file@download
+          file_md5sum: file_md5sum@download
+          object_id: object_id@download
 tools:
   prepare_metadata_xml:  # make a new XML cancatenate original collab XMLs: study, sample, analysis/(experiment and run)
     command: prepare_metadata_xml.py
