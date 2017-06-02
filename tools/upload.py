@@ -11,9 +11,7 @@ cwd = os.getcwd()
 
 """
     input:
-      project_code:
-        type: string
-      collab_file_id:
+      file:
         type: string
       file_name:
         type: string
@@ -22,7 +20,7 @@ cwd = os.getcwd()
       object_id:
         type: string
 """
-collab_file_id = task_dict.get('input').get('collab_file_id')
+file_ = task_dict.get('input').get('file')
 file_name = task_dict.get('input').get('file_name')
 file_md5sum = task_dict.get('input').get('file_md5sum')
 object_id = task_dict.get('input').get('object_id')
@@ -51,27 +49,8 @@ except Exception, e:
 
 task_stop = int(time.time())
 
-"""
-    output:
-      file:  # new field
-        type: string
-        is_file: true
-      collab_file_id:  # passing through
-        type: string
-      file_name:  # passing through
-        type: string
-      file_md5sum:  # passing through
-        type: string
-      object_id:  # passing through
-        type: string
-"""
 
 output_json = {
-    'file': os.path.join(cwd, file_name),
-    'collab_file_id': collab_file_id,
-    'file_name': file_name,  # we may need to deal with encrypted / unencypted file names
-    'object_id': object_id,
-    'file_md5sum': file_md5sum,
     'runtime': {
         'task_start': task_start,
         'task_stop': task_stop
