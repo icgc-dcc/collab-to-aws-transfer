@@ -5,8 +5,8 @@ import subprocess
 
 from utils import get_task_dict, save_output_json
 
-task_dict = get_task_dict(sys.argv[1])
-#task_dict = get_task_dict("""{"input": {"project_code": "23423","collab_file_id": "2341","file_name": "data/test","file_md5sum": "sdfs","object_id": "fbd35588-5bf8-560c-873a-0410f49e5748"}}""")
+#task_dict = get_task_dict(sys.argv[1])
+task_dict = get_task_dict("""{"input": {"project_code": "23423","collab_file_id": "EGAF00000588185","file_name": "c9dc3c3fed697c072a3b00c9fe2c4490.CPCG_0047_Ly_R_PE_294_WG_111216_h801_0065_AD0813ACXX_6_NoIndex_R2.fastq.gz","file_md5sum": "c9dc3c3fed697c072a3b00c9fe2c4490","object_id": "7e2d1747-cda9-5843-8103-d6192cd55af4"}}""")
 cwd = os.getcwd()
 
 """
