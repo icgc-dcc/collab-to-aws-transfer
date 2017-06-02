@@ -21,6 +21,10 @@ cwd = os.getcwd()
         type: string
       object_id:
         type: string
+      bundle_id: bundle_id
+        type: string
+      file_size:
+        type: string
 """
 file_ = task_dict.get('input').get('file')
 file_name = task_dict.get('input').get('file_name')
@@ -33,7 +37,9 @@ task_start = int(time.time())
 
 try:
     print subprocess.check_output(['icgc-storage-client','upload','--file', file_, '--object-id', object_id, '--md5', file_md5sum, '--force'])
-    #auto icgc-storage-client upload --file test --object-id fbd35588-5bf8-560c-873a-0410f49e5748 --md5 d8e8fca2dc0f896fd7cb4cb0031ba249 --force
+    #icgc-storage-client upload --file test --object-id fbd35588-5bf8-560c-873a-0410f49e5748 --md5 d8e8fca2dc0f896fd7cb4cb0031ba249 --force
+except Exception:
+    print subprocess.check_output(['icgc-storage-client','upload','--file', file_, '--object-id', object_id, '--md5', file_md5sum, '--force'])
 except Exception, e:
     with open('jt.log', 'w') as f: f.write(str(e))
 

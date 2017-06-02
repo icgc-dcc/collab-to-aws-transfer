@@ -62,32 +62,15 @@ workflow:
 
 
   tasks:
-
-    # prepare_metadata_xml:
-    #   tool: prepare_metadata_xml
-    #   input:
-    #     collab_metadata_repo: collab_metadata_repo
-    #     project_code: project_code
-    #     bundle_id: bundle_id
-    #     collab_study_id: collab_study_id
-    #     collab_dataset_id: collab_dataset_id
-    #     collab_sample_id: collab_sample_id
-    #     collab_analysis_id: collab_analysis_id
-    #     collab_expriment_id: collab_expriment_id
-    #     collab_run_id: collab_run_id
-    #     collab_metadata_file_name: collab_metadata_file_name
-    #   depends_on: null
-    #
-    # xml_file_upload:
-    #   tool: upload
-    #   input:
-    #     bundle_id: bundle_id
-    #     object_id: collab_metadata_object_id  # this is the object_id obtained from ICGC service using bundle_id and collab_metadata_file_name as input
-    #     file: xml_file@prepare_metadata_xml
-    #     file_name: collab_metadata_file_name
-    #     file_size: xml_file_size@prepare_metadata_xml
-    #     file_md5sum: xml_file_md5sum@prepare_metadata_xml
-
+    xml_file_upload:
+      tool: upload
+      input:
+        bundle_id: bundle_id
+        object_id: collab_metadata_object_id  # this is the object_id obtained from ICGC service using bundle_id and collab_metadata_file_name as input
+        file: xml_file@prepare_metadata_xml
+        file_name: collab_metadata_file_name
+        file_size: xml_file_size@prepare_metadata_xml
+        file_md5sum: xml_file_md5sum@prepare_metadata_xml
     parallel_download:
       scatter:
         input:
@@ -112,40 +95,8 @@ workflow:
             file: file@download
             file_md5sum: file_md5sum@download
             object_id: object_id@download
+
 tools:
-  prepare_metadata_xml:  # make a new XML cancatenate original collab XMLs: study, sample, analysis/(experiment and run)
-    command: prepare_metadata_xml.py
-    input:
-      collab_metadata_repo:
-        type: string
-      project_code:
-        type: string
-      bundle_id:  # EGAR or EGAZ ID
-        type: string
-      collab_study_id:
-        type: string
-      collab_dataset_id:
-        type: string
-      collab_sample_id:
-        type: string
-      collab_analysis_id:
-        type: string
-      collab_expriment_id:
-        type: string
-      collab_run_id:
-        type: string
-      collab_metadata_file_name:
-        type: string
-    output:
-      xml_file:
-        type: string
-        is_file: true
-      xml_file_name:  # passing through from collab_metadata_file_name
-        type: string
-      xml_file_size:
-        type: integer
-      xml_file_md5sum:
-        type: string
   download:
     command: download.py
     input:
@@ -167,7 +118,6 @@ tools:
         type: string
       object_id:  # passing through
         type: string
-
 
   upload:
     command: upload.py
