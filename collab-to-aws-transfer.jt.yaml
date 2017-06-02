@@ -171,9 +171,7 @@ tools:
   upload:
     command: upload.py
     input:
-      project_code:
-        type: string
-      collab_file_id:
+      file:
         type: string
       file_name:
         type: string
