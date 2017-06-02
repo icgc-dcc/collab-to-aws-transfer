@@ -171,18 +171,15 @@ tools:
   upload:
     command: upload.py
     input:
-      bundle_id:
+      project_code:
         type: string
-      object_id:
+      collab_file_id:
         type: string
-      file:
-        type: string
-        is_file: true
       file_name:
         type: string
-      file_size:
-        type: integer
       file_md5sum:
+        type: string
+      object_id:
         type: string
       # the follow params are optional
       idx_object_id:
