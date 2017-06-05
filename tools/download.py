@@ -25,7 +25,7 @@ cwd = os.getcwd()
 
 file_name = task_dict.get('input').get('file_name')
 object_id = task_dict.get('input').get('object_id')
-file_md5sum = task_dict.get('input').get('xml_file_md5sum')
+#file_md5sum = task_dict.get('input').get('xml_file_md5sum')
 
 
 task_start = int(time.time())
@@ -58,7 +58,7 @@ output_json = {
     'file': os.path.join(cwd, file_name),
     'file_name': file_name,  # we may need to deal with encrypted / unencypted file names
     'object_id': object_id,
-    'file_md5sum': file_md5sum,
+#    'file_md5sum': file_md5sum,
     'runtime': {
         'task_start': task_start,
         'task_stop': task_stop
