@@ -28,7 +28,6 @@ object_id = task_dict.get('input').get('object_id')
 file_md5sum = task_dict.get('input').get('file_md5sum')
 
 
-
 task_start = int(time.time())
 
 try:

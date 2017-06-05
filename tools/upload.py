@@ -4,7 +4,7 @@ import os
 import sys
 import time
 import subprocess
-
+from utils import get_md5
 from utils import get_task_dict, save_output_json
 
 task_dict = get_task_dict(sys.argv[1])
@@ -32,6 +32,8 @@ file_md5sum = task_dict.get('input').get('file_md5sum')
 object_id = task_dict.get('input').get('object_id')
 #project_code = task_dict.get('input').get('project_code')
 
+if file_md5sum is None:
+    file_md5sum = get_md5(file_name)
 
 task_start = int(time.time())
 
