@@ -1,6 +1,6 @@
 workflow:
   name: collab-to-aws-transfer
-  version: "0.1.35"
+  version: "0.1.36"
   runtime:
     docker: null
 
@@ -67,10 +67,8 @@ workflow:
     xml_file_download:
       tool: download
       input:
-        project_code: project_code
         file_name: ega_metadata_file_name
         object_id: ega_metadata_object_id
-        file_md5sum: xml_file_md5sum
       depends_on: null
 
     xml_file_upload:

@@ -33,16 +33,14 @@ object_id = task_dict.get('input').get('object_id')
 #project_code = task_dict.get('input').get('project_code')
 
 if file_md5sum is None:
-    file_md5sum = get_md5(file_name)
+    file_md5sum = str(get_md5(file_name))
 
 task_start = int(time.time())
 
 try:
     print(file_md5sum)
-    print subprocess.check_output(['icgc-storage-client','upload','--file', file_, '--object-id', object_id, '--md5', file_md5sum, '--force'])
+    print subprocess.check_output(['icgc-storage-client','upload','--file', file_, '--object-id', object_id, '--md5', file_md5sum])
     #icgc-storage-client upload --file test --object-id fbd35588-5bf8-560c-873a-0410f49e5748 --md5 d8e8fca2dc0f896fd7cb4cb0031ba249 --force
-except Exception:
-    print subprocess.check_output(['icgc-storage-client','upload','--file', file_, '--object-id', object_id, '--md5', file_md5sum, '--force'])
 except Exception, e:
     with open('jt.log', 'w') as f: f.write(str(e))
 
