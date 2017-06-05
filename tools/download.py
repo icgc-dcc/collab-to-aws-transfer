@@ -35,6 +35,8 @@ try:
 
 except Exception, e:
     with open('jt.log', 'w') as f: f.write(str(e))
+    print(e)
+    raise Exception
     sys.exit(1)  # task failed
 
 task_stop = int(time.time())
