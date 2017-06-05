@@ -1,6 +1,6 @@
 workflow:
   name: collab-to-aws-transfer
-  version: "0.1.32"
+  version: "0.1.33"
   runtime:
     docker: null
 
@@ -95,7 +95,8 @@ workflow:
             file_name: ega_file.file_name
             file_md5sum: ega_file.file_md5sum
             object_id: ega_file.object_id
-          #depends_on: [xml_file_upload]
+          depends_on:
+          - completed@xml_file_download
 
         upload:
           tool: upload
