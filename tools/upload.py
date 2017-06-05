@@ -33,7 +33,7 @@ object_id = task_dict.get('input').get('object_id')
 #project_code = task_dict.get('input').get('project_code')
 
 if file_md5sum is None:
-    file_md5sum = str(get_md5(file_name))
+    file_md5sum = str(get_md5(file_))
 
 task_start = int(time.time())
 
@@ -60,6 +60,7 @@ task_stop = int(time.time())
 
 
 output_json = {
+    'file_md5sum': file_md5sum,
     'runtime': {
         'task_start': task_start,
         'task_stop': task_stop
