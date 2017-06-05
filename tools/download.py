@@ -13,7 +13,7 @@ cwd = os.getcwd()
     input:
       project_code:
         type: string
-      collab_file_id:
+      ega_file_id:
         type: string
       file_name:
         type: string

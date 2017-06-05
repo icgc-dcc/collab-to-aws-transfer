@@ -1,6 +1,6 @@
 workflow:
   name: collab-to-aws-transfer
-  version: "0.1.24"
+  version: "0.1.25"
   runtime:
     docker: null
 
@@ -69,14 +69,15 @@ workflow:
       input:
         file_name: ega_metadata_file_name
         object_id: ega_metadata_object_id
-
-    xml_file_upload:
-      tool: upload
-      input:
-        object_id: ega_metadata_object_id  # this is the object_id obtained from ICGC service using bundle_id and ega_metadata_file_name as input
-        file: file@xml_file_download
-        file_name: ega_metadata_file_name
         file_md5sum: xml_file_md5sum
+
+    # xml_file_upload:
+    #   tool: upload
+    #   input:
+    #     object_id: ega_metadata_object_id  # this is the object_id obtained from ICGC service using bundle_id and ega_metadata_file_name as input
+    #     file: file@xml_file_download
+    #     file_name: ega_metadata_file_name
+    #     file_md5sum: xml_file_md5sum
 
     parallel_download:
       scatter:
