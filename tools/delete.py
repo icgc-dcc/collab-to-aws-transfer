@@ -17,7 +17,7 @@ file_ = task_dict.get('input').get('file')
 task_start = int(time.time())
 
 try:
-	os.remove(filename)
+	os.remove(file_)
 except Exception, e:
     with open('jt.log', 'w') as f: f.write(str(e))
 
