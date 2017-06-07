@@ -1,6 +1,6 @@
 workflow:
   name: collab-to-aws-transfer
-  version: "0.1.39"
+  version: "0.1.40"
   runtime:
     docker: null
 
@@ -81,6 +81,13 @@ workflow:
       depends_on:
       - completed@xml_file_download
 
+    xml_delete:
+      tool: delete
+      input:
+        file: file@xml_file_upload
+      depends_on:
+      - completed@xml_file_upload
+
     parallel_download:
       scatter:
         input:
@@ -105,6 +112,13 @@ workflow:
             file: file@download
             file_md5sum: file_md5sum@download
             object_id: object_id@download
+
+        delete:
+          tool: delete
+          input:
+            file: file@upload
+          depends_on:
+          - complete@upload
 
 tools:
   download:
@@ -152,3 +166,16 @@ tools:
         type: integer
       idx_file_md5sum:
         type: string
+    output:
+      file:
+        type: string
+        is_file: true
+      file_md5sum:
+        type: string
+
+  delete:
+    command: delete.py
+    input:
+      file:
+        type: string
+        is_file: true
