@@ -1,6 +1,6 @@
 workflow:
   name: collab-to-aws-transfer
-  version: "0.1.47"
+  version: "0.1.48"
   runtime:
     docker: null
 
@@ -145,6 +145,11 @@ tools:
       file_md5sum:
         type: string
       file:
+        type: string
+    output:
+      file_md5sum:
+        type: string
+      calculated_md5:
         type: string
 
   download:

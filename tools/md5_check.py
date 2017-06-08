@@ -19,8 +19,21 @@ file_md5sum = task_dict.get('input').get('file_md5sum')
 
 task_start = int(time.time())
 
-if file_md5sum != str(get_md5(file_)):
+calc_md5 = str(get_md5(file_))
+
+if file_md5sum != calc_md5:
     with open('jt.log', 'w') as f: f.write(str("md5sum of file does not match given md5"))
     sys.exit(1)  # task failed
 
 task_stop = int(time.time())
+
+output_json = {
+    'file_md5sum': file_md5sum,
+    'calculated_md5': calc_md5
+    'runtime': {
+        'task_start': task_start,
+        'task_stop': task_stop
+    }
+}
+
+save_output_json(output_json)
