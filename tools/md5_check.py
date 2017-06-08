@@ -29,7 +29,7 @@ task_stop = int(time.time())
 
 output_json = {
     'file_md5sum': file_md5sum,
-    'calculated_md5': calc_md5
+    'calculated_md5': calc_md5,ß
     'runtime': {
         'task_start': task_start,
         'task_stop': task_stop
