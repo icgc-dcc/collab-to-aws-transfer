@@ -1,6 +1,6 @@
 workflow:
   name: collab-to-aws-transfer
-  version: "0.1.45"
+  version: "0.1.46"
   runtime:
     docker: null
 
@@ -79,7 +79,7 @@ workflow:
         file_name: ega_metadata_file_name
         file_md5sum: xml_file_md5sum
       depends_on:
-      - completed@xml_file_download
+      - completed@xml_md5_check
 
     xml_delete:
       tool: delete
@@ -102,7 +102,16 @@ workflow:
             file_name: ega_file.file_name
             file_md5sum: ega_file.file_md5sum
             object_id: ega_file.object_id
-          depends_on: null
+          depends_on:
+            null
+
+        md5_check:
+          tool: md5_check
+          input:
+            file_md5sum: ega_file.file_md5sum
+            file: file@download
+          depends_on:
+          - complete@download
 
         upload:
           tool: upload
@@ -112,6 +121,8 @@ workflow:
             file: file@download
             file_md5sum: file_md5sum@download
             object_id: object_id@download
+          depends_on:
+          - complete@md5_check
 
         delete:
           tool: delete
@@ -120,7 +131,22 @@ workflow:
           depends_on:
           - complete@upload
 
+        # delete_for_fail:
+        #   tool: delete
+        #   input:
+        #     file: file@upload
+        #   depends_on:
+        #   - failed@md5_check
+
 tools:
+  md5_check:
+    command: md5_check.py
+    input:
+      file_md5sum:
+        type: string
+      file:
+        type: string
+
   download:
     command: download.py
     input:
