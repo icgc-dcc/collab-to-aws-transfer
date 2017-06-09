@@ -35,7 +35,7 @@ if file_md5sum is None:
 task_start = int(time.time())
 
 try:
-    print subprocess.check_output(['icgc-storage-client','upload','--file', file_, '--object-id', object_id, '--md5', file_md5sum, '--force'])
+    print subprocess.check_output(['icgc-storage-client','upload','--file', file_, '--object-id', object_id, '--md5', file_md5sum, '--force', '--verify-connection', 'false'])
 except Exception, e:
     with open('jt.log', 'w') as f: f.write(str(e))
 
