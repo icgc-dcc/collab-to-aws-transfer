@@ -31,7 +31,7 @@ file_md5sum = task_dict.get('input').get('file_md5sum')
 task_start = int(time.time())
 
 try:
-    print subprocess.check_output(['icgc-storage-client','--profile',' collab','download','--object-id', object_id,'--output-dir', cwd ])
+    print subprocess.check_output(['icgc-storage-client','--profile',' collab','download','--object-id', object_id,'--output-dir', cwd, '--force' ])
 
 except Exception, e:
     with open('jt.log', 'w') as f: f.write(str(e))
