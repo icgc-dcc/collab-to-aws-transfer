@@ -13,6 +13,7 @@ task_dict = get_task_dict(sys.argv[1])
         type: string
 """
 file_ = task_dict.get('input').get('file')
+idx_file = task_dict.get('input').get('idx_file')
 
 task_start = int(time.time())
 
