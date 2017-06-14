@@ -16,6 +16,7 @@ object_id = task_dict.get('input').get('object_id')
 idx_file_ = task_dict.get('input').get('idx_file')
 idx_file_name = task_dict.get('input').get('idx_file_name')
 idx_object_id = task_dict.get('input').get('idx_object_id')
+idx_file_md5sum = task_dict.get('input').get('idx_file_md5sum')
 
 if file_md5sum is None:
     file_md5sum = str(get_md5(file_))
@@ -23,8 +24,6 @@ if file_md5sum is None:
 
 if idx_file_ and idx_file_md5sum is None:
     idx_file_md5sum = str(get_md5(idx_file_))
-elif idx_file_ is None and idx_file_md5sum is None:
-    idx_file_md5sum = None
 
 file_size = int(os.path.getsize(file_))
 
