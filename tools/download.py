@@ -35,14 +35,15 @@ if idx_object_id:
 
 task_stop = int(time.time())
 
-
+if idx_file_name:
+    idx_file_ = os.path.join(cwd, idx_file_name)
 
 output_json = {
     'file': os.path.join(cwd, file_name),
     'file_name': file_name,  # we may need to deal with encrypted / unencypted file names
     'object_id': object_id,
     'file_md5sum': file_md5sum,
-    'idx_file': os.path.join(cwd, idx_file_name),
+    'idx_file': , idx_file_
     'idx_file_name': idx_file_name,  # we may need to deal with encrypted / unencypted file names
     'idx_object_id': idx_object_id,
     'runtime': {
