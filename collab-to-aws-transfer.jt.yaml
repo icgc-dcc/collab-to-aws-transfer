@@ -1,6 +1,6 @@
 workflow:
   name: collab-to-aws-transfer
-  version: "0.1.60"
+  version: "0.1.61"
   runtime:
     docker: null
 

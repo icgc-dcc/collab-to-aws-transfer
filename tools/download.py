@@ -35,6 +35,7 @@ if idx_object_id:
 
 task_stop = int(time.time())
 
+idx_file_ = None
 if idx_file_name:
     idx_file_ = os.path.join(cwd, idx_file_name)
 
