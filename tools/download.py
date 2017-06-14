@@ -43,7 +43,7 @@ output_json = {
     'file_name': file_name,  # we may need to deal with encrypted / unencypted file names
     'object_id': object_id,
     'file_md5sum': file_md5sum,
-    'idx_file': , idx_file_
+    'idx_file': idx_file_,
     'idx_file_name': idx_file_name,  # we may need to deal with encrypted / unencypted file names
     'idx_object_id': idx_object_id,
     'runtime': {
