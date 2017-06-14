@@ -56,8 +56,8 @@ task_stop = int(time.time())
 output_json = {
     'file': file_,
     'file_md5sum': file_md5sum,
-    'idx_file': file_,
-    'idx_file_md5sum': file_md5sum,
+    'idx_file': idx_file_,
+    'idx_file_md5sum': idx_file_md5sum,
     'file_size' : file_size,
     'runtime': {
         'task_start': task_start,
