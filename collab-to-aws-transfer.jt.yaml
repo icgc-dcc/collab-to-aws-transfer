@@ -1,6 +1,6 @@
 workflow:
   name: collab-to-aws-transfer
-  version: "0.1.64"
+  version: "0.1.65"
   runtime:
     docker: null
 
@@ -85,7 +85,6 @@ workflow:
       tool: delete
       input:
         file: file@xml_file_upload
-        idx_file: idx_file@xml_file_upload
       depends_on:
       - completed@xml_file_upload
 
@@ -104,8 +103,8 @@ workflow:
             file_md5sum: ega_file.file_md5sum
             object_id: ega_file.object_id
 
-            idx_file_name: idx_file_name
-            idx_object_id: idx_object_id
+            idx_file_name: ega_file.idx_file_name
+            idx_object_id: ega_file.idx_object_id
           depends_on:
             null
 
