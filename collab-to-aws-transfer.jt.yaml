@@ -1,6 +1,6 @@
 workflow:
   name: collab-to-aws-transfer
-  version: "0.1.54"
+  version: "0.1.56"
   runtime:
     docker: null
 
@@ -102,6 +102,9 @@ workflow:
             file_name: ega_file.file_name
             file_md5sum: ega_file.file_md5sum
             object_id: ega_file.object_id
+
+            idx_file_name: idx_file_name
+            idx_object_id: idx_object_id
           depends_on:
             null
 
@@ -121,6 +124,11 @@ workflow:
             file: file@download
             file_md5sum: file_md5sum@download
             object_id: object_id@download
+
+            idx_file: idx_file@download
+            idx_file_name: idx_file_name@download
+            idx_object_id: idx_object_id@download
+            idx_file_md5sum: idx_file_md5sum@download
           depends_on:
           - completed@md5_check
 
@@ -128,6 +136,7 @@ workflow:
           tool: delete
           input:
             file: file@upload
+            idx_file: idx_file@upload
           depends_on:
           - completed@upload
 
@@ -163,6 +172,10 @@ tools:
         type: string
       object_id:
         type: string
+      idx_file_name:
+        type: string
+      idx_object_id:
+        type: string
     output:
       file:  # new field
         type: string
@@ -173,6 +186,14 @@ tools:
         type: string
       object_id:  # passing through
         type: string
+      idx_file:  # new field
+        type: string
+        is_file: true
+      idx_file_name:  # passing through
+        type: string
+      idx_object_id:  # passing through
+        type: string
+
 
   upload:
     command: upload.py

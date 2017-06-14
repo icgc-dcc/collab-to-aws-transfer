@@ -18,6 +18,8 @@ task_start = int(time.time())
 
 try:
 	os.remove(file_)
+    if idx_file_:
+        os.remove(idx_file_)
 except Exception, e:
     with open('jt.log', 'w') as f: f.write(str(e))
 
