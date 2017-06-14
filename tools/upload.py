@@ -20,8 +20,11 @@ idx_object_id = task_dict.get('input').get('idx_object_id')
 if file_md5sum is None:
     file_md5sum = str(get_md5(file_))
 
+
 if idx_file_ and idx_file_md5sum is None:
     idx_file_md5sum = str(get_md5(idx_file_))
+elif idx_file_ is None and idx_file_md5sum is None:
+    idx_file_md5sum = None
 
 file_size = int(os.path.getsize(file_))
 
