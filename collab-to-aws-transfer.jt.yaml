@@ -1,6 +1,6 @@
 workflow:
   name: collab-to-aws-transfer
-  version: "0.1.63"
+  version: "0.1.64"
   runtime:
     docker: null
 
@@ -85,6 +85,7 @@ workflow:
       tool: delete
       input:
         file: file@xml_file_upload
+        idx_file: idx_file@xml_file_upload
       depends_on:
       - completed@xml_file_upload
 
