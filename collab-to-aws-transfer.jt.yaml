@@ -1,6 +1,6 @@
 workflow:
   name: collab-to-aws-transfer
-  version: "0.1.62"
+  version: "0.1.63"
   runtime:
     docker: null
 
@@ -229,5 +229,8 @@ tools:
     command: delete.py
     input:
       file:
+        type: string
+        is_file: true
+      idx_file:
         type: string
         is_file: true
