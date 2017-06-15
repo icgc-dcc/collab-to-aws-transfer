@@ -27,13 +27,8 @@ if idx_file_ and idx_file_md5sum is None:
 
 file_size = int(os.path.getsize(file_))
 
-task_start = int(time.time())
 
-try:
-    print subprocess.check_output(['icgc-storage-client','upload','--file', file_, '--object-id', object_id, '--md5', file_md5sum, '--force'])
-except Exception, e:
-    with open('jt.log', 'w') as f: f.write(str(e))
-    sys.exit(1)
+task_start = int(time.time())
 
 if idx_object_id:
     file_size+= + int(os.path.getsize(idx_file_))
@@ -42,15 +37,14 @@ if idx_object_id:
     except Exception, e:
         with open('jt.log', 'w') as f: f.write(str(e))
         sys.exit(1)  # task failed
+        
+try:
+    print subprocess.check_output(['icgc-storage-client','upload','--file', file_, '--object-id', object_id, '--md5', file_md5sum, '--force'])
+except Exception, e:
+    with open('jt.log', 'w') as f: f.write(str(e))
+    sys.exit(1)
 
-# try:
-#     r = subprocess.check_output(['curl','https://raw.githubusercontent.com/jt-hub/ega-collab-transfer-tools/master/download_ega_file.py','|','python','-','-p',project_code,'-f', ega_file_id+".aes", '-o', file_name])
-# except Exception, e:
-#     print e
-#     sys.exit(1)  # task failed
 
-
-# complete the task
 
 task_stop = int(time.time())
 
