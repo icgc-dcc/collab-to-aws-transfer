@@ -1,6 +1,6 @@
 workflow:
   name: collab-to-aws-transfer
-  version: "0.1.73"
+  version: "0.1.74"
   runtime:
     docker: null
 
@@ -124,7 +124,7 @@ workflow:
             file: file@download
             file_md5sum: file_md5sum@download
             object_id: object_id@download
-            project_code: ega_file.project_code
+            project_code: project_code
 
             idx_file: idx_file@download
             idx_file_name: idx_file_name@download
