@@ -1,6 +1,6 @@
 workflow:
   name: collab-to-aws-transfer
-  version: "0.1.70"
+  version: "0.1.71"
   runtime:
     docker: null
 
@@ -124,6 +124,7 @@ workflow:
             file: file@download
             file_md5sum: file_md5sum@download
             object_id: object_id@download
+            project_code: ega_file.project_code
 
             idx_file: idx_file@download
             idx_file_name: idx_file_name@download
@@ -194,7 +195,6 @@ tools:
       idx_object_id:  # passing through
         type: string
 
-
   upload:
     command: upload.py
     input:
@@ -205,6 +205,8 @@ tools:
       file_md5sum:
         type: string
       object_id:
+        type: string
+      project_code:
         type: string
       # the follow params are optional
       idx_object_id:
