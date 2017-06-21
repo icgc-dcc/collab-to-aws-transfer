@@ -125,7 +125,6 @@ workflow:
             file: file@download
             file_md5sum: file_md5sum@download
             object_id: object_id@download
-            project_code: project_code
 
             idx_file: idx_file@download
             idx_file_name: idx_file_name@download
@@ -227,6 +226,8 @@ tools:
         is_file: true
       file_md5sum:
         type: string
+      allowed_upload:
+        type: boolean
 
   delete:
     command: delete.py

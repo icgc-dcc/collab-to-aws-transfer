@@ -23,22 +23,24 @@ idx_object_id = task_dict.get('input').get('idx_object_id')
 idx_file_md5sum = task_dict.get('input').get('idx_file_md5sum')
 project_code = task_dict.get('input').get('project_code')
 
-if file_md5sum is None:
-    file_md5sum = str(get_md5(file_))
-
-
-if idx_file_ and idx_file_md5sum is None:
-    idx_file_md5sum = str(get_md5(idx_file_))
 
 task_start = int(time.time())
 file_size = 0
+run = False
 
 if project_code in allowed_codes:
-    task_info= 'Project code %s is allowed. Starting Upload.' % project_code
+    run = True
+
+    if file_md5sum is None:
+        file_md5sum = str(get_md5(file_))
+
+    if idx_file_ and idx_file_md5sum is None:
+        idx_file_md5sum = str(get_md5(idx_file_))
+
     file_size = int(os.path.getsize(file_))
 
     if idx_object_id:
-        file_size+= + int(os.path.getsize(idx_file_))
+        file_size+= int(os.path.getsize(idx_file_))
         try:
             print subprocess.check_output(['icgc-storage-client','upload','--file', idx_file_, '--object-id', idx_object_id, '--md5', idx_file_md5sum, '--force'])
         except Exception, e:
@@ -50,10 +52,6 @@ if project_code in allowed_codes:
     except Exception, e:
         with open('jt.log', 'w') as f: f.write(str(e))
         sys.exit(1)
-else:
-    task_info= "**********************************************************"
-    task_info= "Project code %s is not allowed!!! Skipping Upload!!!" % project_code
-    task_info= "**********************************************************"
 
 
 task_stop = int(time.time())
@@ -61,6 +59,7 @@ task_stop = int(time.time())
 
 output_json = {
     'file': file_,
+    'allowed_upload': run,
     'file_md5sum': file_md5sum,
     'idx_file': idx_file_,
     'idx_file_md5sum': idx_file_md5sum,
